@@ -1,0 +1,6 @@
+#!/bin/bash
+THEME="$1"
+SRC="$HOME/.config/theme-colors/$THEME/kitty/colors.conf"
+DST="$HOME/.config/kitty/colors/colors.conf"
+
+[[ -f "$SRC" ]] && cp "$SRC" "$DST" && "$HOME/Scripts/reload-kitty"

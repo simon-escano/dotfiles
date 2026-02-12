@@ -1,0 +1,8 @@
+#!/bin/bash
+# Script to reload Walker launcher
+
+# Kill existing walker instances
+killall walker
+
+# Launch walker in the background
+walker --gapplication-service &

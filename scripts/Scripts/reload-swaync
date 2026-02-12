@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+DAEMON="swaync"
+CLIENT="swaync-client"
+
+if pgrep -x "$DAEMON" > /dev/null; then
+    echo ":: $DAEMON is running. Attempting hot reload..."
+
+    $CLIENT -R
+    $CLIENT -rs
+
+    echo ":: Reload signals sent successfully."
+
+else
+    echo "!! $DAEMON is not running. Starting it now..."
+    
+    $DAEMON & disown
+    
+    echo ":: $DAEMON started."
+fi

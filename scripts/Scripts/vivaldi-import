@@ -1,0 +1,77 @@
+#!/bin/bash
+# vivaldi-import — Import Vivaldi UI settings from dotfiles into a fresh install
+# Merges vivaldi-settings.json back into Preferences and Local State
+# Usage: vivaldi-import
+# NOTE: Run this AFTER Vivaldi has been launched at least once (to create Preferences)
+#       and while Vivaldi is CLOSED
+
+DOTFILES_DIR="$HOME/dotfiles"
+VIVALDI_DIR="$HOME/.config/vivaldi"
+PREFS_FILE="$VIVALDI_DIR/Default/Preferences"
+LOCAL_STATE="$VIVALDI_DIR/Local State"
+SETTINGS_FILE="$DOTFILES_DIR/vivaldi/vivaldi-settings.json"
+
+if [[ ! -f "$SETTINGS_FILE" ]]; then
+    echo "❌ No vivaldi-settings.json found in dotfiles"
+    exit 1
+fi
+
+# Check if Vivaldi is running
+if pgrep -x vivaldi >/dev/null 2>&1; then
+    echo "⚠️  Vivaldi is running! Please close it first."
+    echo "   Settings will be overwritten on exit if Vivaldi is open."
+    exit 1
+fi
+
+if [[ ! -f "$PREFS_FILE" ]]; then
+    echo "❌ Vivaldi Preferences not found. Launch Vivaldi once first to generate defaults."
+    exit 1
+fi
+
+python3 -c "
+import json, sys
+
+with open('$SETTINGS_FILE', 'r') as f:
+    settings = json.load(f)
+
+# Merge vivaldi settings into Preferences
+try:
+    with open('$PREFS_FILE', 'r') as f:
+        prefs = json.load(f)
+
+    if 'vivaldi' in settings:
+        if 'vivaldi' not in prefs:
+            prefs['vivaldi'] = {}
+        prefs['vivaldi'].update(settings['vivaldi'])
+
+    for key in ['pinned_tabs', 'saved_tab_groups']:
+        if key in settings:
+            prefs[key] = settings[key]
+
+    with open('$PREFS_FILE', 'w') as f:
+        json.dump(prefs, f, indent=2)
+    print('✅ Merged settings into Preferences')
+
+except Exception as e:
+    print(f'❌ Failed to merge Preferences: {e}', file=sys.stderr)
+    sys.exit(1)
+
+# Merge experimental flags into Local State
+if 'enabled_labs_experiments' in settings:
+    try:
+        with open('$LOCAL_STATE', 'r') as f:
+            local_state = json.load(f)
+
+        if 'browser' not in local_state:
+            local_state['browser'] = {}
+        local_state['browser']['enabled_labs_experiments'] = settings['enabled_labs_experiments']
+
+        with open('$LOCAL_STATE', 'w') as f:
+            json.dump(local_state, f, indent=2)
+        print('✅ Merged experimental flags into Local State')
+
+    except Exception as e:
+        print(f'❌ Failed to merge Local State: {e}', file=sys.stderr)
+
+print('🎉 Vivaldi settings imported! Launch Vivaldi to see changes.')
+"

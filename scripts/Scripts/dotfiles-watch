@@ -1,0 +1,47 @@
+#!/bin/bash
+# dotfiles-watch — Watch .config for new directories and prompt to add to dotfiles
+# Uses inotifywait to monitor ~/.config for new directory creation
+# Run in autostart.conf: exec-once = ~/Scripts/dotfiles-watch &
+
+DOTFILES_DIR="$HOME/dotfiles"
+WATCH_DIR="$HOME/.config"
+
+# Directories to ignore (app-managed, caches, runtime data)
+IGNORE_PATTERNS="(chromium|discord|spotify|obsidian|obs-studio|pulse|dconf|ibus|mozc|Code|Electron|Proton|FreeCAD|YouTube Music|Antigravity|vivaldi|yay|go|elephant|fint|hu\.irl|menus|procps|qtvirtualkeyboard|simple-update-notifier|vscode-vibrancy|qalculate|cache|Cache)"
+
+# Track already-tracked stow packages (directory basenames that stow manages)
+get_tracked_configs() {
+    find "$DOTFILES_DIR" -mindepth 2 -maxdepth 2 -name ".config" -type d | \
+        while read -r d; do
+            ls "$d" 2>/dev/null
+        done | sort -u
+}
+
+# Check if inotifywait is available
+if ! command -v inotifywait &>/dev/null; then
+    notify-send -a "Dotfiles" -u critical "❌ dotfiles-watch" \
+        "inotify-tools is not installed.\nRun: sudo pacman -S inotify-tools"
+    exit 1
+fi
+
+# Watch for new directory creation in .config
+inotifywait -m -q -e create --format '%f' "$WATCH_DIR" 2>/dev/null | while read -r NEW_DIR; do
+    # Skip if it's a file (not a directory)
+    [[ ! -d "$WATCH_DIR/$NEW_DIR" ]] && continue
+
+    # Skip ignored patterns
+    echo "$NEW_DIR" | grep -qE "$IGNORE_PATTERNS" && continue
+
+    # Skip if already tracked in dotfiles
+    TRACKED=$(get_tracked_configs)
+    echo "$TRACKED" | grep -qx "$NEW_DIR" && continue
+
+    # Small delay to let the app finish creating its config
+    sleep 2
+
+    # Notify user
+    notify-send -a "Dotfiles" -u normal \
+        "🆕 New Config Detected" \
+        "'$NEW_DIR' appeared in ~/.config\nWould you like to add it to dotfiles?" \
+        --action="add=📦 Add to Dotfiles" --action="dismiss=Ignore"
+done

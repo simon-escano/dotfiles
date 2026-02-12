@@ -1,0 +1,135 @@
+@import "colors/colors.css";
+
+/* Global & Window */
+* {
+    font-size: 12px;
+    transition: font-size 0.15s ease;
+}
+
+window#waybar {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    min-height: 0;
+}
+
+button:hover {
+    opacity: 0.5;
+}
+
+/* Layout Containers */
+.modules-left,
+.modules-center,
+.modules-right {
+    padding: 4px 4px 0; /* Top/Sides 4px, Bottom 0 */
+}
+
+/* Workspaces */
+#workspaces {
+    background-color: alpha(@bg_main, 0.65);
+    border: 1px solid alpha(@border, 0.4);
+    border-radius: 999px;
+    margin: 3px;
+    padding: 4px 2px;
+}
+
+#workspaces button {
+    background-color: alpha(@border, 0.2);
+    border: none;
+    border-radius: 999px;
+    font-size: 2px;
+    margin: 0 2px;
+    min-height: 16px;
+    padding: 0px;
+    transition: padding 0.3s ease, background-color 0.3s ease;
+}
+
+#workspaces button.active {
+    background-color: @fg_main;
+    padding: 0 6px;
+}
+
+/* Shared Module Styles (The Pills) */
+#backlight,
+#battery,
+#clock,
+#custom-media,
+#custom-notification,
+#custom-power,
+#idle_inhibitor,
+#keyboard-state,
+#language,
+#mode,
+#mpd,
+#privacy-item,
+#scratchpad,
+#system,
+#tray,
+#window {
+    background-color: alpha(@bg_main, 0.65);
+    border: 1px solid alpha(@border, 0.4);
+    border-radius: 11px;
+    color: @fg_main;
+    margin: 2px;
+    padding: 0 12px;
+}
+
+/* Hide window module when empty */
+window#waybar.empty #window {
+    background-color: transparent;
+    border: none;
+    color: transparent;
+}
+
+#custom-notification {
+    border-radius: 999px;
+    padding: 0 9px;
+}
+
+#pulseaudio {
+    margin-right: 10px;
+}
+
+/* Hardware Group (Hover Reveal) */
+#hardware {
+    margin-right: 4px;
+}
+
+#memory, 
+#cpu {
+    font-size: 0px;
+}
+
+#hardware:hover #memory, 
+#hardware:hover #cpu {
+    font-size: 12px;
+}
+
+/* Menus */
+menu {
+    background-color: alpha(@bg_main, 0.65);
+    border: 1px solid alpha(@border, 0.4);
+    padding: 4px;
+}
+
+menuitem {
+    border-radius: 5px;
+    color: @fg_main;
+    padding: 4px 10px;
+    transition: all 0.2s ease;
+}
+
+menuitem:hover {
+    background-color: @fg_main;
+}
+
+tooltip {
+    background: alpha(@bg_main, 0.9);
+    border: 1px solid alpha(@border, 0.4);
+    border-radius: 11px;
+}
+
+tooltip label {
+    color: @fg_main;
+    text-shadow: none;
+}

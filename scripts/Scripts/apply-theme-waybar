@@ -1,0 +1,6 @@
+#!/bin/bash
+THEME="$1"
+SRC="$HOME/.config/theme-colors/$THEME/css/gtk-colors.css"
+DST="$HOME/.config/waybar/colors/colors.css"
+
+[[ -f "$SRC" ]] && cp "$SRC" "$DST" && killall -SIGUSR2 waybar

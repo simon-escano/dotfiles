@@ -1,0 +1,6 @@
+#!/bin/bash
+THEME="$1"
+SRC="$HOME/.config/theme-colors/$THEME/css/gtk-colors.css"
+DST="$HOME/.config/walker/themes/colors/colors.css"
+
+[[ -f "$SRC" ]] && cp "$SRC" "$DST"

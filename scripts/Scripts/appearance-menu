@@ -1,0 +1,34 @@
+#!/bin/bash
+# Appearance settings menu for Hyprland
+
+SCRIPTS="$HOME/Scripts"
+THEMES_DIR="$HOME/.config/theme-colors"
+WALLPAPERS_DIR="$HOME/Pictures/Wallpapers"
+
+dmenu() { walker --dmenu --placeholder "$1"; }
+
+to_title() { echo "$1" | sed 's/-/ /g; s/\b\(.\)/\u\1/g'; }
+
+to_kebab() { echo "$1" | sed 's/ /-/g' | tr '[:upper:]' '[:lower:]'; }
+
+show_themes() {
+    local names=()
+    while IFS= read -r f; do names+=("$(to_title "$f")"); done < <(find "$THEMES_DIR" -mindepth 1 -maxdepth 1 -type d ! -name '.template' -printf '%f\n' | sort)
+
+    local sel
+    sel=$(printf '%s\n' "${names[@]}" | dmenu "Select Theme")
+    [[ -n "$sel" ]] && setsid -f "$SCRIPTS/apply-theme" "$(to_kebab "$sel")" &>/dev/null
+}
+
+show_wallpapers() {
+    local sel
+    sel=$(find "$WALLPAPERS_DIR" -maxdepth 1 -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \) -printf '%f\n' | sort | dmenu "Select Wallpaper")
+    [[ -n "$sel" ]] && exec "$SCRIPTS/apply-wallpaper" "$WALLPAPERS_DIR/$sel"
+}
+
+case "$(printf 'Themes\nWallpapers\nFonts\nWaybar Layout' | dmenu "Appearance")" in
+    Themes)          show_themes ;;
+    Wallpapers)      show_wallpapers ;;
+    Fonts)           notify-send "Appearance" "Fonts: Coming soon" ;;
+    "Waybar Layout") notify-send "Appearance" "Waybar Layout: Coming soon" ;;
+esac

@@ -1,0 +1,63 @@
+#!/bin/bash
+
+# 1. Clear previous notifications to start fresh
+swaync-client -C
+
+echo "Sending notifications..."
+
+# --- LOW PRIORITY (Subtle) ---
+notify-send "Wifi Connected" \
+    "Connected to 'FBI Surveillance Van 4'" \
+    -u low \
+    -i "network-wireless" \
+    -a "System"
+
+# --- NORMAL PRIORITY (Standard) ---
+notify-send "New Email from Boss" \
+    "<b>Subject: Project Deadline</b>\nHey, I need those reports on my desk by 5 PM. Don't forget to include the cover sheets on the TPS reports. Did you get that memo?" \
+    -u normal \
+    -i "mail-unread" \
+    -a "Thunderbird"
+
+notify-send "Spotify" \
+    "Now Playing: <b>Never Gonna Give You Up</b>\nArtist: Rick Astley\nAlbum: Whenever You Need Somebody" \
+    -u normal \
+    -i "spotify" \
+    -h string:image-path:"/usr/share/icons/Adwaita/48x48/status/audio-volume-high-symbolic.symbolic.png" \
+    -a "Spotify"
+
+# --- CRITICAL PRIORITY (Red/Urgent) ---
+notify-send "System Failure" \
+    "<b>CRITICAL ERROR:</b> Kernel Panic detected at 0x000000.\nFilesystem corruption imminent. Please save your work immediately." \
+    -u critical \
+    -i "dialog-error" \
+    -a "Kernel"
+
+notify-send "Security Alert" \
+    "Unauthorized access attempt detected from IP 192.168.1.55.\nFirewall has blocked 309 attempts in the last minute." \
+    -u critical \
+    -i "security-high" \
+    -a "Firewall"
+
+# --- PROGRESS BAR (Hints) ---
+notify-send "System Update" \
+    "Downloading packages (34/105)..." \
+    -u normal \
+    -i "system-software-update" \
+    -h int:value:33 \
+    -a "Pacman"
+
+# --- GROUPING TEST (Spamming one app) ---
+# This tests if your "Spotify" group header looks good
+notify-send "Spotify" "Next Up: Sandstorm - Darude" -u low -a "Spotify"
+notify-send "Spotify" "Paused" -u low -a "Spotify"
+
+# --- ACTIONABLE (Requires notification server support) ---
+# Note: Standard notify-send doesn't easily do buttons without specific flags/forks, 
+# but this tests the layout for a standard notification with actions if your system supports it.
+notify-send "Screenshot Saved" \
+    "Screenshot-2024-05-20.png saved to ~/Pictures" \
+    -i "camera-photo" \
+    -a "Hyprshot"
+
+echo "Done! Check your swaync dashboard."

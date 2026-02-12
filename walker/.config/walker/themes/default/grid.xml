@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"></requires>
+  <object class="GtkBox" id="ItemBox">
+    <style>
+      <class name="item-box"></class>
+    </style>
+    <property name="orientation">vertical</property>
+    <property name="spacing">5</property>
+    <child>
+      <object class="GtkLabel" id="ItemImage">
+        <style>
+          <class name="item-image"></class>
+        </style>
+        <property name="pixel-size">128</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox" id="ItemTextBox">
+        <property name="hexpand">true</property>
+        <child>
+          <object class="GtkLabel" id="ItemText">
+            <property name="wrap">true</property>
+            <property name="justify">center</property>
+            <property name="max-width-chars">15</property>
+            <property name="ellipsize">end</property>
+            <style>
+               <class name="item-text"></class>
+               <class name="caption"></class>
+            </style>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

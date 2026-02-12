@@ -1,0 +1,8 @@
+/* GTK Colors - Generated from {{theme_name}} */
+
+@define-color bg_main #{{base00}}; /* base00 */
+@define-color fg_main #{{base07}}; /* base07 */
+@define-color accent #{{base0E}}; /* base0E */
+@define-color border #{{base04}}; /* base04 */
+@define-color shadow #{{base01}}; /* base01 */
+@define-color error #{{base08}}; /* base08 */

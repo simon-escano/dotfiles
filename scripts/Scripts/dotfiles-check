@@ -1,0 +1,76 @@
+#!/bin/bash
+# dotfiles-check — Check for unsynced dotfiles changes on login
+# Checks both local uncommitted changes AND remote incoming changes
+# Run in autostart.conf: exec-once = ~/Scripts/dotfiles-check
+
+DOTFILES_DIR="$HOME/dotfiles"
+
+# Wait for network to be available (for git fetch)
+sleep 5
+
+cd "$DOTFILES_DIR" || exit 1
+
+# --- Check local changes ---
+LOCAL_CHANGES=$(git status --porcelain 2>/dev/null)
+LOCAL_DIRTY=false
+if [[ -n "$LOCAL_CHANGES" ]]; then
+    LOCAL_DIRTY=true
+    LOCAL_COUNT=$(echo "$LOCAL_CHANGES" | wc -l)
+fi
+
+# --- Check remote changes ---
+REMOTE_AHEAD=0
+if git fetch origin main --quiet 2>/dev/null; then
+    REMOTE_AHEAD=$(git rev-list HEAD..origin/main --count 2>/dev/null || echo 0)
+fi
+
+LOCAL_BEHIND=0
+LOCAL_BEHIND=$(git rev-list origin/main..HEAD --count 2>/dev/null || echo 0)
+
+# --- Build notification ---
+if [[ "$LOCAL_DIRTY" == "true" && "$REMOTE_AHEAD" -gt 0 ]]; then
+    # Both local AND remote changes
+    notify-send -a "Dotfiles" -u normal \
+        "📦 Dotfiles Out of Sync" \
+        "Local: $LOCAL_COUNT uncommitted change(s)\nRemote: $REMOTE_AHEAD incoming commit(s)\n\nRun 'dotsync' to push local, or 'git pull' first for remote." \
+        --action="sync=🚀 Sync Now" --action="dismiss=Dismiss"
+
+elif [[ "$LOCAL_DIRTY" == "true" ]]; then
+    # Only local changes
+    notify-send -a "Dotfiles" -u normal \
+        "📦 Unsynced Dotfiles Changes" \
+        "$LOCAL_COUNT file(s) changed locally.\nRun 'dotsync' to sync." \
+        --action="sync=🚀 Sync Now" --action="dismiss=Dismiss"
+
+elif [[ "$REMOTE_AHEAD" -gt 0 ]]; then
+    # Only remote changes (from another device)
+    notify-send -a "Dotfiles" -u normal \
+        "📥 Incoming Dotfiles Changes" \
+        "$REMOTE_AHEAD commit(s) from another device.\nRun 'cd ~/dotfiles && git pull' to apply." \
+        --action="pull=📥 Pull Now" --action="dismiss=Dismiss"
+
+elif [[ "$LOCAL_BEHIND" -gt 0 ]]; then
+    # Local is ahead but already committed (just needs push)
+    notify-send -a "Dotfiles" -u low \
+        "📤 Dotfiles Need Push" \
+        "$LOCAL_BEHIND commit(s) not yet pushed." \
+        --action="push=🚀 Push Now" --action="dismiss=Dismiss"
+else
+    # Everything is clean
+    exit 0
+fi
+
+# Wait for action response from swaync
+read -r ACTION < /proc/self/fd/0 2>/dev/null || ACTION=""
+
+case "$ACTION" in
+    "sync")
+        kitty --title "Dotfiles Sync" -e bash -c "$HOME/Scripts/dotsync; echo 'Press any key...'; read -n1"
+        ;;
+    "pull")
+        kitty --title "Dotfiles Pull" -e bash -c "cd $DOTFILES_DIR && git pull origin main; echo 'Press any key...'; read -n1"
+        ;;
+    "push")
+        kitty --title "Dotfiles Push" -e bash -c "cd $DOTFILES_DIR && git push origin main; echo 'Press any key...'; read -n1"
+        ;;
+esac

@@ -1,0 +1,38 @@
+#!/bin/bash
+# dotsync — Sync dotfiles to git with package list updates
+# Usage: dotsync
+
+DOTFILES_DIR="$HOME/dotfiles"
+
+cd "$DOTFILES_DIR" || {
+    notify-send -a "Dotfiles" -u critical "❌ Dotfiles Sync Failed" "Could not find $DOTFILES_DIR"
+    exit 1
+}
+
+echo "📦 Updating package lists..."
+pacman -Qqen > "$DOTFILES_DIR/meta/pkglist.txt" 2>/dev/null
+pacman -Qqem > "$DOTFILES_DIR/meta/aurlist.txt" 2>/dev/null
+
+echo "🔧 Exporting Vivaldi settings..."
+"$HOME/Scripts/vivaldi-export" 2>/dev/null
+
+# Check if there are changes to commit
+if [[ -z $(git status --porcelain) ]]; then
+    notify-send -a "Dotfiles" -u low "✅ Dotfiles Already Synced" "No changes to commit."
+    echo "✅ No changes to commit."
+    exit 0
+fi
+
+echo "📝 Committing changes..."
+git add .
+git commit -m "sync: $(date +'%Y-%m-%d %H:%M:%S')"
+
+echo "🚀 Pushing to remote..."
+if git push origin main 2>&1; then
+    notify-send -a "Dotfiles" -u normal "🚀 Dotfiles Synced!" "Changes pushed to GitHub successfully."
+    echo "🚀 All systems synced and backed up!"
+else
+    notify-send -a "Dotfiles" -u critical "❌ Dotfiles Push Failed" "git push failed. Check your connection."
+    echo "❌ Push failed!"
+    exit 1
+fi

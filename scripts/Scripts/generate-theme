@@ -1,0 +1,94 @@
+#!/bin/bash
+
+# ==============================================================================
+# Script: generate-theme
+# Description: Populates theme files using templates and base16.yaml
+# Usage: generate-theme <theme1> [theme2] [theme3]...
+# ==============================================================================
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+BASE_DIR="$(dirname "$(dirname "$SCRIPT_DIR")")/theme-colors"
+TEMPLATE_DIR="$BASE_DIR/.template"
+
+# 1. Global Validation
+# ------------------------------------------------------------------------------
+if [[ $# -eq 0 ]]; then
+    echo "Usage: $(basename "$0") <theme_name> [theme_name...]"
+    exit 1
+fi
+
+if [[ ! -d "$TEMPLATE_DIR" ]]; then
+    echo "Error: Template directory not found at $TEMPLATE_DIR"
+    exit 1
+fi
+
+# 2. Iterate through all arguments
+# ------------------------------------------------------------------------------
+for THEME_NAME in "$@"; do
+
+    THEME_DIR="$BASE_DIR/$THEME_NAME"
+    YAML_FILE="$THEME_DIR/base16.yaml"
+    
+    echo "Processing: $THEME_NAME..."
+
+    # Check if theme exists
+    if [[ ! -f "$YAML_FILE" ]]; then
+        echo "  [Error] base16.yaml not found in '$THEME_DIR'. Skipping."
+        continue
+    fi
+
+    # 3. Parse YAML
+    # --------------------------------------------------------------------------
+    # Clean previous variables
+    unset base00 base01 base02 base03 base04 base05 base06 base07
+    unset base08 base09 base0A base0B base0C base0D base0E base0F
+
+    # Extract colors
+    eval $(grep -E "^  base[0-9A-F]{2}:" "$YAML_FILE" | sed -E 's/^  (base[0-9A-F]{2}): "?#?([0-9A-Fa-f]{6})"?/\1=\2/')
+
+    # Validation check
+    if [[ -z "$base00" ]]; then
+        echo "  [Error] Failed to parse colors for '$THEME_NAME'. Skipping."
+        continue
+    fi
+
+    # 4. Process Templates
+    # --------------------------------------------------------------------------
+    find "$TEMPLATE_DIR" -type f | while read -r template_file; do
+        
+        # Get relative path (e.g., /hypr/colors.conf)
+        rel_path="${template_file#$TEMPLATE_DIR}"
+        
+        # Determine destination path
+        dest_file="$THEME_DIR$rel_path"
+        dest_dir="$(dirname "$dest_file")"
+        
+        # Ensure destination directory exists
+        mkdir -p "$dest_dir"
+        
+        # Replace placeholders
+        sed \
+            -e "s/{{theme_name}}/$THEME_NAME/g" \
+            -e "s/{{base00}}/$base00/g" \
+            -e "s/{{base01}}/$base01/g" \
+            -e "s/{{base02}}/$base02/g" \
+            -e "s/{{base03}}/$base03/g" \
+            -e "s/{{base04}}/$base04/g" \
+            -e "s/{{base05}}/$base05/g" \
+            -e "s/{{base06}}/$base06/g" \
+            -e "s/{{base07}}/$base07/g" \
+            -e "s/{{base08}}/$base08/g" \
+            -e "s/{{base09}}/$base09/g" \
+            -e "s/{{base0A}}/$base0A/g" \
+            -e "s/{{base0B}}/$base0B/g" \
+            -e "s/{{base0C}}/$base0C/g" \
+            -e "s/{{base0D}}/$base0D/g" \
+            -e "s/{{base0E}}/$base0E/g" \
+            -e "s/{{base0F}}/$base0F/g" \
+            "$template_file" > "$dest_file"
+
+    done
+    
+    echo "  -> OK"
+    echo "" # Empty line for readability
+done

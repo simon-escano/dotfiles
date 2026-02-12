@@ -1,0 +1,10 @@
+/* @import url("resource:///org/gnome/theme/gtk.css"); */
+
+window, .background {
+    background-color: rgba(30, 30, 46, 0.65);
+}
+
+window.solid-csd, 
+window.solid-csd > .background {
+    background-color: rgba(30, 30, 46, 0.65);
+}

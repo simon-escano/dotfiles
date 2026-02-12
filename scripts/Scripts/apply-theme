@@ -1,0 +1,16 @@
+#!/bin/bash
+# apply-theme <theme_name>
+
+THEME="$1"
+[[ -z "$THEME" ]] && exit 1
+
+SCRIPTS="$HOME/Scripts"
+
+"$SCRIPTS/apply-theme-hypr" "$THEME" &
+"$SCRIPTS/apply-theme-kitty" "$THEME" &
+"$SCRIPTS/apply-theme-waybar" "$THEME" &
+"$SCRIPTS/apply-theme-swaync" "$THEME" &
+"$SCRIPTS/apply-theme-walker" "$THEME" &
+wait
+
+notify-send "Theme Applied" "$THEME"

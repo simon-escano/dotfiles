@@ -1,0 +1,14 @@
+anki-bin
+antigravity
+apple-fonts
+cursor-bin
+elephant-all-bin
+layer-shell-qt5
+nitch
+ttf-apple-emoji
+visual-studio-code-bin
+walker-bin
+xdg-desktop-portal-termfilechooser-hunkyburrito-git
+yay
+yay-debug
+zsh-theme-powerlevel10k-git

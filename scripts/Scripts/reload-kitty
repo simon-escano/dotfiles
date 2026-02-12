@@ -1,0 +1,4 @@
+#!/bin/bash
+# Reload all kitty instances using SIGUSR1
+
+pkill -USR1 -x kitty

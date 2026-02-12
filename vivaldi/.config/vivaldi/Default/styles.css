@@ -1,0 +1,130 @@
+/* Hide header */
+#header {
+    display: none;
+}
+
+/* Hide unnecessary header elements (Hyprland) */
+button.vivaldi, div.window-buttongroup {
+    display: none !important;
+}
+
+/* Make background transparent */
+#browser,
+.tabbar-wrapper,
+#tabs-container,
+#webview-container {
+    background-color: transparent;
+    backdrop-filter: none !important;   
+}
+
+#browser.fullscreen #webview-container {
+    padding: 0px;
+}
+#browser.fullscreen #webpage-stack {
+    border-radius: 0px;
+    border: none;
+}
+
+/* Make background semi-transparent and frosty */
+#main,
+#header,
+#footer {
+    min-height: 0 !important;
+    box-shadow: none !important;
+    background: var(--colorBgAlphaBlur) !important;
+    backdrop-filter: var(--backgroundBlur) !important;
+    border: none !important;
+}
+
+#titlebar {
+    display: none;
+}
+
+/* Make sidebar transparent */
+#panels-container {
+    background-color: transparent !important
+}
+
+/* Make left sidebar bordered  */
+#panels-container.left {
+    border-right: 1px solid var(--colorBgLighter);
+}
+
+/* Make right sidebar bordered */
+#panels-container.right {
+    border-left: 1px solid var(--colorBgLighter);
+}
+
+/* Hide sidebar */
+#panels-container.icons {
+    width: 0px !important;
+}
+#switch {
+    display: none;
+}
+#ui-region-panel {
+    min-width: unset !important;
+    max-width: unset !important;
+    width: 100%;
+}
+
+/* Make address bar semi-transparent when not focused */
+[name="AddressField"]:not(:focus-within) {
+    flex: 100;
+    opacity: 0.5;
+}
+
+/* Add spacing in between tab panel elements and remove padding */
+#tabs-container {
+    padding: 0 !important;
+    gap: calc(var(--densityGap) * 2);
+}
+
+/* Add web view padding */
+#webview-container,
+#header,
+#footer {
+    transition: padding 0.3s ease;
+    padding: calc(var(--densityGap) * 3);
+}
+#webpage-stack {
+    transition:
+        border 0.3s ease,
+        border-radius 0.3s ease;
+    border: 1px solid var(--colorBgLighter);
+    border-radius: var(--radius);
+}
+
+/* Add header and footer padding */
+#header,
+#footer {
+    padding: calc(var(--densityGap) * 2);
+}
+
+/* Make startpage cleaner, darker and frosty */
+.startpage {
+    background-color: var(--colorBgAlphaHeavier);
+}
+.startpage-content {
+    display: none !important;
+}
+
+/* Set appropriate paddings to tab orientation */
+#browser.tabs-left #webview-container {
+    padding-left: 0;
+}
+#browser.tabs-right #webview-container {
+    padding-right: 0;
+}
+#browser.tabs-top #webview-container {
+    padding-top: 0;
+}
+#browser.tabs-bottom #webview-container {
+    padding-bottom: 0;
+}
+
+/* Make active tabs fully rounded */
+.tab.active {
+    overflow: hidden !important;
+    border-radius: calc(var(--scrollbarWidth) / 2);
+}

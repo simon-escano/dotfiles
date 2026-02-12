@@ -1,0 +1,78 @@
+#!/bin/bash
+# dotadd — Add a config path to dotfiles via stow
+# Usage: dotadd <path> [package-name]
+# Examples:
+#   dotadd ~/.config/mpv
+#   dotadd ~/.config/mpv mpv
+#   dotadd ~/.local/share/some-app some-app
+
+DOTFILES_DIR="$HOME/dotfiles"
+
+if [[ -z "$1" ]]; then
+    echo "Usage: dotadd <path> [package-name]"
+    echo "Examples:"
+    echo "  dotadd ~/.config/mpv"
+    echo "  dotadd ~/.config/mpv my-pkg-name"
+    exit 1
+fi
+
+# Resolve to absolute path
+SOURCE_PATH="$(realpath "$1")"
+
+if [[ ! -e "$SOURCE_PATH" ]]; then
+    echo "❌ Path does not exist: $SOURCE_PATH"
+    exit 1
+fi
+
+# Determine relative path from HOME
+REL_PATH="${SOURCE_PATH#$HOME/}"
+if [[ "$REL_PATH" == "$SOURCE_PATH" ]]; then
+    echo "❌ Path must be inside \$HOME"
+    exit 1
+fi
+
+# Determine package name
+if [[ -n "$2" ]]; then
+    PKG_NAME="$2"
+else
+    # Auto-detect: use the last directory component of the config path
+    # e.g. ~/.config/mpv -> mpv, ~/.local/share/applications -> applications
+    PKG_NAME="$(basename "$SOURCE_PATH")"
+fi
+
+PKG_DIR="$DOTFILES_DIR/$PKG_NAME"
+
+# Check if package already exists
+if [[ -d "$PKG_DIR" ]]; then
+    echo "⚠️  Package '$PKG_NAME' already exists in dotfiles."
+    echo -n "Add to existing package? [y/N] "
+    read -r answer
+    if [[ "$answer" != "y" && "$answer" != "Y" ]]; then
+        echo "Aborted."
+        exit 0
+    fi
+fi
+
+# Create the mirrored directory structure
+DEST_PATH="$PKG_DIR/$REL_PATH"
+DEST_PARENT="$(dirname "$DEST_PATH")"
+
+echo "📁 Creating package structure..."
+mkdir -p "$DEST_PARENT"
+
+# Move the original files into the stow package
+echo "📦 Moving $SOURCE_PATH → $DEST_PATH"
+mv "$SOURCE_PATH" "$DEST_PATH"
+
+# Stow the package to create symlinks back
+echo "🔗 Stowing $PKG_NAME..."
+cd "$DOTFILES_DIR" || exit 1
+if stow "$PKG_NAME" 2>&1; then
+    echo "✅ '$PKG_NAME' added to dotfiles and symlinked!"
+    notify-send -a "Dotfiles" -u normal "📦 Config Added to Dotfiles" "'$PKG_NAME' is now tracked.\nPath: $REL_PATH"
+else
+    echo "❌ Stow failed. Restoring original..."
+    mv "$DEST_PATH" "$SOURCE_PATH"
+    notify-send -a "Dotfiles" -u critical "❌ dotadd Failed" "Stow failed for '$PKG_NAME'. Original restored."
+    exit 1
+fi

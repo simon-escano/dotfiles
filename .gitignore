@@ -1,0 +1,26 @@
+# Dotfiles .gitignore
+
+# Vivaldi browser data (we only track styles.css and vivaldi-settings.json)
+vivaldi/.config/vivaldi/Default/Bookmarks*
+vivaldi/.config/vivaldi/Default/History*
+vivaldi/.config/vivaldi/Default/Cookies*
+vivaldi/.config/vivaldi/Default/Login*
+
+# nvim plugin compiled/cache files
+nvim/.config/nvim/lazy-lock.json
+
+# Micro editor state
+micro/.config/micro/backups/
+micro/.config/micro/buffers/
+
+# btop logs
+btop/.config/btop/btop.log
+
+# fcitx5 runtime/cached data
+fcitx5/.config/fcitx5/conf/cached_layouts
+
+# OS/editor junk
+*.swp
+*.swo
+*~
+.DS_Store

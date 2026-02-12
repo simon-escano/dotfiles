@@ -1,0 +1,10 @@
+[filechooser]
+cmd=/usr/bin/kitty --class=yazi-file-picker --title=File_Picker -e /home/simon/.config/xdg-desktop-portal-termfilechooser/yazi-wrapper.sh
+
+# Disable creation of temp file with instructions
+create_help_file=0
+
+# Start in suggested directory
+default_dir=$HOME
+open_mode=suggested
+save_mode=suggested

@@ -1,0 +1,242 @@
+@import "colors/colors.css";
+
+/* --- Reset & Defaults --- */
+* {
+    all: unset;
+    font-size: 14px;
+    font-family: "SF Pro Display", "SF Pro", sans-serif;
+    transition: background-color 0.15s ease;
+}
+
+notificationwindow, blankwindow {
+    background: transparent;
+}
+
+/* --- Control Center --- */
+.control-center {
+    background-color: alpha(@bg_main, 0.65);
+    color: @fg_main;
+    border: 2px solid alpha(@border, 0.15);
+    border-radius: 20px;
+    box-shadow: 0px 8px 16px alpha(@shadow, 0.3);
+    margin: 4px 7px;
+    padding-top: 8px;
+}
+
+.control-center-list-placeholder { opacity: 0.1; }
+.control-center-list-placeholder image { opacity: 0; }
+
+/* --- Widgets --- */
+
+/* Title */
+.widget-title {
+    padding: 12px 12px 8px;
+}
+
+.widget-title > label {
+    font-size: 1.5em;
+    color: @fg_main;
+    margin-right: 12px;
+}
+
+.widget-title > button {
+    background-color: alpha(@border, 0.1);
+    color: @fg_main;
+    border-radius: 999px;
+    padding: 8px;
+    font-size: 0.9em;
+}
+
+.widget-title > button:hover { background-color: alpha(@border, 0.2); }
+
+/* DND */
+.widget-dnd {
+    background-color: alpha(@border, 0.05);
+    border: 1px solid alpha(@border, 0.1);
+    border-radius: 12px;
+    padding: 12px;
+    margin: 0 12px 12px; /* Top 0, Sides/Bottom 12 */
+}
+
+.widget-dnd > label {
+    font-size: 1.1em;
+    color: @fg_main;
+}
+
+.widget-dnd > switch {
+    background: alpha(@border, 0.2);
+    border: 1px solid alpha(@border, 0.1);
+    border-radius: 20px;
+}
+
+.widget-dnd > switch:checked {
+    background: @accent;
+    border: 1px solid @accent;
+}
+
+.widget-dnd > switch slider {
+    background: @fg_main;
+    border-radius: 50%;
+}
+
+/* MPRIS */
+.mpris-background { opacity: 0; }
+.widget-mpris-album-art { border-radius: 4px; }
+
+.widget-mpris {
+    padding: 4px 12px 8px 12px;
+}
+
+.widget-mpris-player {
+    background-color: alpha(@border, 0.05);
+    border: 1px solid alpha(@border, 0.1);
+    border-radius: 12px;
+    padding: 12px;
+}
+
+.widget-mpris-title {
+    font-size: 1.1em;
+    color: @fg_main;
+}
+
+.widget-mpris-subtitle {
+    font-size: 0.9em;
+    color: alpha(@fg_main, 0.5);
+}
+
+/* Volume */
+.widget-volume {
+    padding: 0 12px 8px;
+    border-bottom: 1px solid alpha(@border, 0.1);
+}
+
+.widget-volume scale trough,
+.per-app-volume scale trough {
+    background-color: alpha(@border, 0.2);
+    border-radius: 10px;
+    min-height: 16px;
+    margin: 8px 16px;
+}
+
+.widget-volume scale highlight,
+.per-app-volume scale highlight {
+    background-color: @accent;
+    border-radius: 10px;
+}
+
+/* Inhibitors */
+.widget-inhibitors > button { color: alpha(@fg_main, 0.7); }
+.widget-inhibitors > button:hover { color: @fg_main; }
+
+/* --- Notifications --- */
+.control-center-list {
+    padding: 0 12px;
+}
+
+.notification-row {
+    outline: none;
+    margin-bottom: 8px;
+}
+
+.notification {
+    background-color: alpha(@bg_main, 1);
+    border: 2px solid alpha(@border, 0.15);
+    border-radius: 16px;
+    margin: 0;
+    padding: 0;
+}
+
+.notification-default-action {
+    background: transparent;
+    padding: 16px;
+    border-radius: 16px;
+}
+
+.notification-default-action:hover { background-color: alpha(@border, 0.1); }
+
+/* Close Button (Inner Position Hack) */
+.close-button {
+    background: transparent;
+    color: @fg_main;
+    border: none;
+    padding: 0;
+    border-radius: 50%;
+    min-width: 24px;
+    min-height: 24px;
+    margin: 8px 12px 0 0;
+    box-shadow: none;
+    text-shadow: none;
+}
+
+.close-button:hover {
+    background-color: alpha(@border, 0.15);
+    transition: background 0.15s ease;
+}
+
+/* Content */
+.notification-content .image {
+    border-radius: 50%;
+    margin-right: 16px;
+}
+
+.notification-content .summary {
+    font-size: 1.1em;
+    color: @fg_main;
+}
+
+.notification-content .body {
+    font-size: 1em;
+    color: alpha(@fg_main, 0.4);
+    margin-top: 4px;
+}
+
+.notification-content .time {
+    font-size: 0.8em;
+    color: alpha(@border, 0.4);
+}
+
+/* Actions */
+.notification-action {
+    padding: 8px;
+    border-top: 1px solid alpha(@border, 0.1);
+}
+
+.notification-action button {
+    background: transparent;
+    color: @fg_main;
+    border-radius: 8px;
+    padding: 8px;
+    margin: 0 4px;
+}
+
+.notification-action button:hover { background-color: alpha(@border, 0.15); }
+
+/* Priorities */
+.notification.low { border-color: alpha(@border, 0.15); }
+.notification.critical {
+    border-color: alpha(@error, 0.5);
+}
+
+/* Group Headers */
+.notification-group-headers { padding: 8px; }
+.notification-group-header {
+    color: alpha(@fg_main, 0.6);
+    font-size: 0.9em;
+    font-weight: medium;
+}
+.notification-group-icon {
+    color: alpha(@fg_main, 0.6);
+    margin-right: 8px;
+}
+
+/* --- Floating Notifications --- */
+.floating-notifications { background: transparent; }
+
+.floating-notifications .notification-row {
+    margin: 4px;
+}
+
+.floating-notifications .notification {
+    margin: 0 4px;
+    background-color: alpha(@bg_main, 0.65);
+}

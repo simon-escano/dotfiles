@@ -1,0 +1,8 @@
+/* GTK Colors - Generated from catppuccin-latte */
+
+@define-color bg_main #eff1f5; /* base00 */
+@define-color fg_main #4c4f69; /* base05 */
+@define-color accent #8839ef; /* base0E */
+@define-color border #6c6f85; /* base04 */
+@define-color shadow #4c4f69; /* base05 */
+@define-color error #d20f39; /* base08 */

@@ -1,0 +1,6 @@
+#!/bin/bash
+THEME="$1"
+SRC="$HOME/.config/theme-colors/$THEME/hypr/colors.conf"
+DST="$HOME/.config/hypr/colors/colors.conf"
+
+[[ -f "$SRC" ]] && cp "$SRC" "$DST" && hyprctl reload
