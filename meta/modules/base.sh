@@ -7,28 +7,28 @@ echo ""
 
 # --- Install packages ---
 if [[ "$SKIP_PACKAGES" != "true" ]]; then
-    echo "📋 Installing official packages..."
+    echo "  Installing official packages..."
     if [[ -f "$META_DIR/pkglist.txt" ]]; then
         sudo pacman -S --needed - < "$META_DIR/pkglist.txt"
     fi
 
     echo ""
-    echo "📋 Installing AUR packages (requires yay)..."
+    echo "  Installing AUR packages (requires yay)..."
     if command -v yay &>/dev/null && [[ -f "$META_DIR/aurlist.txt" ]]; then
         yay -S --needed - < "$META_DIR/aurlist.txt"
     else
-        echo "⚠️  yay not found or aurlist.txt missing. Install yay first:"
+        echo "  yay not found or aurlist.txt missing. Install yay first:"
         echo "   git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si"
     fi
 else
-    echo "⏭️  Skipping package installation (--skip-packages)"
+    echo "  Skipping package installation (--skip-packages)"
 fi
 
 echo ""
 
 # --- Stow all packages ---
 if [[ "$SKIP_STOW" != "true" ]]; then
-    echo "🔗 Stowing dotfiles..."
+    echo "  Stowing dotfiles..."
     cd "$DOTFILES_DIR"
 
     # Get all stow packages (directories that aren't meta or hidden)
@@ -38,20 +38,20 @@ if [[ "$SKIP_STOW" != "true" ]]; then
         [[ "$pkg" == .* ]] && continue
 
         echo "  → stow $pkg"
-        stow "$pkg" 2>&1 || echo "  ⚠️  Failed to stow $pkg"
+        stow "$pkg" 2>&1 || echo "    Failed to stow $pkg"
     done
 else
-    echo "⏭️  Skipping stow (--skip-stow)"
+    echo "  Skipping stow (--skip-stow)"
 fi
 
 echo ""
 
 # --- Shell setup ---
-echo "🐚 Setting up Oh My Zsh..."
+echo "  Setting up Oh My Zsh..."
 if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
     RUNZSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 else
-    echo "  ✅ Oh My Zsh already installed"
+    echo "    Oh My Zsh already installed"
 fi
 
 # Install zsh plugins
@@ -75,14 +75,14 @@ fi
 echo ""
 
 # --- Make scripts executable ---
-echo "🔧 Making scripts executable..."
+echo "  Making scripts executable..."
 chmod +x "$HOME/Scripts/"* 2>/dev/null
 
 echo ""
 
 # --- Enable systemd user services ---
-echo "🔄 Enabling systemd user services..."
-systemctl --user enable elephant.service 2>/dev/null && echo "  ✅ elephant.service" || echo "  ⚠️  elephant.service failed"
+echo "  Enabling systemd user services..."
+systemctl --user enable elephant.service 2>/dev/null && echo "    elephant.service" || echo "    elephant.service failed"
 
 echo ""
-echo "✅ Base module complete!"
+echo "  Base module complete!"

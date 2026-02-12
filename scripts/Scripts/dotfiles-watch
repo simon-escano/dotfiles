@@ -19,7 +19,7 @@ get_tracked_configs() {
 
 # Check if inotifywait is available
 if ! command -v inotifywait &>/dev/null; then
-    notify-send -a "Dotfiles" -u critical "❌ dotfiles-watch" \
+    notify-send -a "Dotfiles" -u critical " dotfiles-watch" \
         "inotify-tools is not installed.\nRun: sudo pacman -S inotify-tools"
     exit 1
 fi
@@ -41,7 +41,7 @@ inotifywait -m -q -e create --format '%f' "$WATCH_DIR" 2>/dev/null | while read 
 
     # Notify user
     notify-send -a "Dotfiles" -u normal \
-        "🆕 New Config Detected" \
+        " New Config Detected" \
         "'$NEW_DIR' appeared in ~/.config\nWould you like to add it to dotfiles?" \
-        --action="add=📦 Add to Dotfiles" --action="dismiss=Ignore"
+        --action="add= Add to Dotfiles" --action="dismiss=Ignore"
 done

@@ -44,7 +44,7 @@ for arg in "$@"; do
 done
 
 echo "╔══════════════════════════════════════╗"
-echo "║    🏠 Dotfiles Bootstrap Installer   ║"
+echo "║      Dotfiles Bootstrap Installer   ║"
 echo "╚══════════════════════════════════════╝"
 echo ""
 
@@ -54,29 +54,29 @@ source "$MODULES_DIR/base.sh"
 # --- Optional modules ---
 if [[ "$INSTALL_NVIDIA" == "true" ]]; then
     echo ""
-    echo "🎮 Running NVIDIA module..."
+    echo "  Running NVIDIA module..."
     source "$MODULES_DIR/nvidia.sh"
 fi
 
 if [[ "$INSTALL_BTRFS" == "true" ]]; then
     echo ""
-    echo "💾 Running btrfs module..."
+    echo "  Running btrfs module..."
     source "$MODULES_DIR/btrfs.sh"
 fi
 
 if [[ "$INSTALL_GRUB" == "true" ]]; then
     echo ""
-    echo "🔧 Running GRUB module..."
+    echo "  Running GRUB module..."
     source "$MODULES_DIR/grub.sh"
 fi
 
 echo ""
 echo "╔══════════════════════════════════════╗"
-echo "║    🎉 Setup complete!                ║"
+echo "║      Setup complete!                ║"
 echo "╚══════════════════════════════════════╝"
 echo ""
 echo "Next steps:"
 echo "  1. Log out and back in (or reboot)"
 echo "  2. Run 'p10k configure' if prompt looks wrong"
 echo "  3. Launch Vivaldi once, close it, then run 'vivaldi-import'"
-echo "  4. Enjoy your setup! 🚀"
+echo "  4. Enjoy your setup!  "

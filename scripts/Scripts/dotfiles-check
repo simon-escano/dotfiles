@@ -31,30 +31,30 @@ LOCAL_BEHIND=$(git rev-list origin/main..HEAD --count 2>/dev/null || echo 0)
 if [[ "$LOCAL_DIRTY" == "true" && "$REMOTE_AHEAD" -gt 0 ]]; then
     # Both local AND remote changes
     notify-send -a "Dotfiles" -u normal \
-        "📦 Dotfiles Out of Sync" \
+        " Dotfiles Out of Sync" \
         "Local: $LOCAL_COUNT uncommitted change(s)\nRemote: $REMOTE_AHEAD incoming commit(s)\n\nRun 'dotsync' to push local, or 'git pull' first for remote." \
-        --action="sync=🚀 Sync Now" --action="dismiss=Dismiss"
+        --action="sync= Sync Now" --action="dismiss=Dismiss"
 
 elif [[ "$LOCAL_DIRTY" == "true" ]]; then
     # Only local changes
     notify-send -a "Dotfiles" -u normal \
-        "📦 Unsynced Dotfiles Changes" \
+        " Unsynced Dotfiles Changes" \
         "$LOCAL_COUNT file(s) changed locally.\nRun 'dotsync' to sync." \
-        --action="sync=🚀 Sync Now" --action="dismiss=Dismiss"
+        --action="sync= Sync Now" --action="dismiss=Dismiss"
 
 elif [[ "$REMOTE_AHEAD" -gt 0 ]]; then
     # Only remote changes (from another device)
     notify-send -a "Dotfiles" -u normal \
-        "📥 Incoming Dotfiles Changes" \
+        " Incoming Dotfiles Changes" \
         "$REMOTE_AHEAD commit(s) from another device.\nRun 'cd ~/dotfiles && git pull' to apply." \
-        --action="pull=📥 Pull Now" --action="dismiss=Dismiss"
+        --action="pull= Pull Now" --action="dismiss=Dismiss"
 
 elif [[ "$LOCAL_BEHIND" -gt 0 ]]; then
     # Local is ahead but already committed (just needs push)
     notify-send -a "Dotfiles" -u low \
-        "📤 Dotfiles Need Push" \
+        " Dotfiles Need Push" \
         "$LOCAL_BEHIND commit(s) not yet pushed." \
-        --action="push=🚀 Push Now" --action="dismiss=Dismiss"
+        --action="push= Push Now" --action="dismiss=Dismiss"
 else
     # Everything is clean
     exit 0

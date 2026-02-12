@@ -10,7 +10,7 @@ LOCAL_STATE="$VIVALDI_DIR/Local State"
 OUTPUT_FILE="$DOTFILES_DIR/vivaldi/vivaldi-settings.json"
 
 if [[ ! -f "$PREFS_FILE" ]]; then
-    echo "❌ Vivaldi Preferences not found at $PREFS_FILE"
+    echo " Vivaldi Preferences not found at $PREFS_FILE"
     exit 1
 fi
 
@@ -58,5 +58,5 @@ except Exception as e:
 with open('$OUTPUT_FILE', 'w') as f:
     json.dump(output, f, indent=2)
 
-print(f'✅ Exported {len(output)} sections to vivaldi-settings.json')
+print(f' Exported {len(output)} sections to vivaldi-settings.json')
 "

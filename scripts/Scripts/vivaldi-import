@@ -12,19 +12,19 @@ LOCAL_STATE="$VIVALDI_DIR/Local State"
 SETTINGS_FILE="$DOTFILES_DIR/vivaldi/vivaldi-settings.json"
 
 if [[ ! -f "$SETTINGS_FILE" ]]; then
-    echo "❌ No vivaldi-settings.json found in dotfiles"
+    echo " No vivaldi-settings.json found in dotfiles"
     exit 1
 fi
 
 # Check if Vivaldi is running
 if pgrep -x vivaldi >/dev/null 2>&1; then
-    echo "⚠️  Vivaldi is running! Please close it first."
+    echo "  Vivaldi is running! Please close it first."
     echo "   Settings will be overwritten on exit if Vivaldi is open."
     exit 1
 fi
 
 if [[ ! -f "$PREFS_FILE" ]]; then
-    echo "❌ Vivaldi Preferences not found. Launch Vivaldi once first to generate defaults."
+    echo " Vivaldi Preferences not found. Launch Vivaldi once first to generate defaults."
     exit 1
 fi
 
@@ -50,10 +50,10 @@ try:
 
     with open('$PREFS_FILE', 'w') as f:
         json.dump(prefs, f, indent=2)
-    print('✅ Merged settings into Preferences')
+    print(' Merged settings into Preferences')
 
 except Exception as e:
-    print(f'❌ Failed to merge Preferences: {e}', file=sys.stderr)
+    print(f' Failed to merge Preferences: {e}', file=sys.stderr)
     sys.exit(1)
 
 # Merge experimental flags into Local State
@@ -68,10 +68,10 @@ if 'enabled_labs_experiments' in settings:
 
         with open('$LOCAL_STATE', 'w') as f:
             json.dump(local_state, f, indent=2)
-        print('✅ Merged experimental flags into Local State')
+        print(' Merged experimental flags into Local State')
 
     except Exception as e:
-        print(f'❌ Failed to merge Local State: {e}', file=sys.stderr)
+        print(f' Failed to merge Local State: {e}', file=sys.stderr)
 
-print('🎉 Vivaldi settings imported! Launch Vivaldi to see changes.')
+print(' Vivaldi settings imported! Launch Vivaldi to see changes.')
 "
