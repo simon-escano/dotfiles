@@ -54,8 +54,8 @@ noto-fonts-cjk
 nvidia-open
 nvidia-utils
 nwg-look
-obsidian
 obs-studio
+obsidian
 openssh
 pacman-contrib
 pavucontrol
@@ -65,11 +65,11 @@ pipewire-jack
 pipewire-pulse
 python-gobject
 qqc2-desktop-style
-qt5ct
 qt5-wayland
+qt5ct
 qt6-5compat
-qt6ct
 qt6-wayland
+qt6ct
 rsync
 steam
 stow

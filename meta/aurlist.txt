@@ -1,7 +1,6 @@
 anki-bin
 antigravity
 apple-fonts
-cursor-bin
 elephant-all-bin
 layer-shell-qt5
 nitch
