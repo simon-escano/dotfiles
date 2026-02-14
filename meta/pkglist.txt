@@ -1,4 +1,5 @@
 7zip
+amd-ucode
 base
 base-devel
 bat
@@ -50,6 +51,8 @@ neovim
 networkmanager
 noto-fonts
 noto-fonts-cjk
+nvidia-open
+nvidia-utils
 nwg-look
 obs-studio
 obsidian
