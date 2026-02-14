@@ -857,7 +857,7 @@
           "oefgkbcfnbncpbociajoehcnnmmipjmo"
         ]
       },
-      "show_search_suggestions_warning": 750
+      "show_search_suggestions_warning": 755
     },
     "appearance": {
       "css_ui_mods_directory": "/home/simon/.config/vivaldi/Default",
@@ -1304,7 +1304,7 @@
     "tabs": {
       "bar": {
         "position": 2,
-        "width": 178
+        "width": 171
       }
     },
     "theme": {
