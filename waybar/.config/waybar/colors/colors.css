@@ -1,8 +1,8 @@
-/* GTK Colors - Generated from emil */
+/* GTK Colors - Generated from tokyo-night-dark */
 
-@define-color bg_main #efefef; /* base00 */
-@define-color fg_main #1a1a2f; /* base07 */
-@define-color accent #6916b6; /* base0E */
-@define-color border #505063; /* base04 */
-@define-color shadow #1a1a2f; /* variant-aware */
-@define-color error #f43979; /* base08 */
+@define-color bg_main #1A1B26; /* base00 */
+@define-color fg_main #D5D6DB; /* base07 */
+@define-color accent #BB9AF7; /* base0E */
+@define-color border #787C99; /* base04 */
+@define-color shadow #16161E; /* variant-aware */
+@define-color error #C0CAF5; /* base08 */

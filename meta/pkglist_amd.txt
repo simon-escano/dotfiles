@@ -1,0 +1,3 @@
+amd-ucode
+mesa
+vulkan-radeon

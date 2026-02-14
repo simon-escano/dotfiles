@@ -3,7 +3,9 @@
 # Usage: ./install.sh [OPTIONS]
 #
 # Options:
-#   --nvidia         Include NVIDIA-specific setup
+#   --nvidia         Force Nvidia setup
+#   --intel          Force Intel setup
+#   --amd            Force AMD setup
 #   --btrfs          Include btrfs subvolume/snapshot setup
 #   --grub           Use GRUB instead of systemd-boot
 #   --systemd-boot   Use systemd-boot (default, no extra action needed)
@@ -18,7 +20,10 @@ META_DIR="$DOTFILES_DIR/meta"
 MODULES_DIR="$META_DIR/modules"
 
 # --- Parse arguments ---
+# --- Parse arguments ---
 INSTALL_NVIDIA=false
+INSTALL_INTEL=false
+INSTALL_AMD=false
 INSTALL_BTRFS=false
 INSTALL_GRUB=false
 SKIP_PACKAGES=false
@@ -26,7 +31,10 @@ SKIP_STOW=false
 
 for arg in "$@"; do
     case "$arg" in
+    case "$arg" in
         --nvidia)         INSTALL_NVIDIA=true ;;
+        --intel)          INSTALL_INTEL=true ;;
+        --amd)            INSTALL_AMD=true ;;
         --btrfs)          INSTALL_BTRFS=true ;;
         --grub)           INSTALL_GRUB=true ;;
         --systemd-boot)   ;; # default, no action
@@ -52,11 +60,8 @@ echo ""
 source "$MODULES_DIR/base.sh"
 
 # --- Optional modules ---
-if [[ "$INSTALL_NVIDIA" == "true" ]]; then
-    echo ""
-    echo "  Running NVIDIA module..."
-    source "$MODULES_DIR/nvidia.sh"
-fi
+# --- Hardware Setup (Auto-detect or Manual) ---
+source "$MODULES_DIR/setup_hardware.sh"
 
 if [[ "$INSTALL_BTRFS" == "true" ]]; then
     echo ""

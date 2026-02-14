@@ -1,0 +1,3 @@
+intel-ucode
+intel-media-driver
+vulkan-intel
