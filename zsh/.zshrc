@@ -99,7 +99,7 @@ source $ZSH/oh-my-zsh.sh
 if [[ -n $SSH_CONNECTION ]]; then
     export EDITOR='vim'
 else
-    export EDITOR='code --wait'
+    export EDITOR='zeditor --wait'
 fi
 
 # Compilation flags
