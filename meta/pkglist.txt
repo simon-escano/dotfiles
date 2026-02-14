@@ -90,6 +90,7 @@ wpa_supplicant
 xdg-desktop-portal-gtk
 xdg-desktop-portal-hyprland
 yazi
+zed
 zoxide
 zram-generator
 zsh

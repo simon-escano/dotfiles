@@ -857,7 +857,7 @@
           "oefgkbcfnbncpbociajoehcnnmmipjmo"
         ]
       },
-      "show_search_suggestions_warning": 698
+      "show_search_suggestions_warning": 750
     },
     "appearance": {
       "css_ui_mods_directory": "/home/simon/.config/vivaldi/Default",
@@ -1060,10 +1060,10 @@
           ]
         },
         "DOWNLOADS_TREE": {
-          "anchorId": 1,
-          "leadId": 1,
+          "anchorId": 52,
+          "leadId": 52,
           "selectedIds": [
-            1
+            52
           ]
         },
         "HISTORY_MANAGER": {
@@ -1234,7 +1234,6 @@
       "window_defaults": {
         "barVisible": true,
         "contentVisible": false,
-        "selectedPanel": "PanelDownloads",
         "width": 468
       }
     },
@@ -1267,10 +1266,6 @@
     },
     "startup": {
       "active_days": [
-        1769559216188.0,
-        1769619902551.0,
-        1769763372315.0,
-        1769817445019.0,
         1769914085946.0,
         1769976003268.0,
         1770072546120.0,
@@ -1281,7 +1276,11 @@
         1770482771092.0,
         1770567283562.0,
         1770690264853.0,
-        1770739391396.0
+        1770739391396.0,
+        1770848097457.0,
+        1770912403727.0,
+        1771074379784.0,
+        1771087759375.0
       ],
       "check_is_default": false,
       "crash_detection_last_seen_version": "7.8.3925.62",
@@ -1305,7 +1304,7 @@
     "tabs": {
       "bar": {
         "position": 2,
-        "width": 160
+        "width": 178
       }
     },
     "theme": {

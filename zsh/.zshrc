@@ -126,38 +126,13 @@ source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 
 # --- Config Shortcuts ---
 
-# 1. Zsh
-alias zshc="$EDITOR ~/.zshrc"
+# Zsh
 alias src="source ~/.zshrc"      # Reload config instantly without restarting terminal
 
-# 2. Fast Navigation
-alias conf="cd ~/.config"
+# Editor
+alias edit="$EDITOR"
 
-# 3. Hyprland
-alias hyprc="$EDITOR ~/.config/hypr/"
-
-# 4. Kitty
-alias kittyc="$EDITOR ~/.config/kitty/"
-
-# 5. Waybar
-alias waybarc="$EDITOR ~/.config/waybar/"
-
-# 6. Vivaldi
-alias vivaldic="$EDITOR ~/dev/vivaldi"
-
-# 7. Walker
-alias walkerc="$EDITOR ~/.config/walker"
-
-# 8. VSCode
-alias code="code --wait"
-
-# 9. theme-colors
-alias colorsc="$EDITOR ~/.config/theme-colors"
-
-# 10. theme-colors
-alias swayncc="$EDITOR ~/.config/swaync"
-
-# 11 better cat
+# Better cat
 alias cat="bat"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.

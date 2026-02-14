@@ -1,0 +1,17 @@
+#!/bin/bash
+
+path="$1"
+
+if [ -z "$path" ]; then
+    echo "No path provided."
+    exit 1
+fi
+
+if [ -f "$path" ]; then
+    chmod +x "$path"
+elif [ -d "$path" ]; then
+    chmod +x "$path"/*
+else
+    echo "permit: cannot permit ‘$path’: No such file or directory"
+    exit 1
+fi

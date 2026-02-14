@@ -1,0 +1,33 @@
+#!/bin/bash
+
+config_dir="$HOME/.config"
+search_paths=("$config_dir" "$HOME")
+editor=${EDITOR:-nano}
+query="$1"
+
+get_list() {
+    fd . "${search_paths[@]}" --max-depth 1 --hidden --exclude ".git" | xargs -n 1 basename | sed 's/^\.//' | sort -u
+}
+
+if [ -n "$query" ]; then
+    if [ -e "$config_dir/$query" ]; then
+        exec $editor "$config_dir/$query"
+    elif [ -e "$HOME/.$query" ]; then
+        exec $editor "$HOME/.$query"
+    fi
+fi
+
+selected=$(get_list | fzf --query "$query" --height 10 --reverse --select-1 --exit-0)
+
+if [ -z "$selected" ]; then
+    [ -z "$query" ] && exit 0
+    read -n 1 -p "conf: '$query' does not exist. Create it? (y/n): " choice
+    echo
+    [[ ${choice,,} == "y" ]] && mkdir -p "$config_dir/$query" && exec $editor "$config_dir/$query"
+    echo "conf: cannot open '$query': No such file or directory"
+    exit 1
+fi
+
+[ -e "$config_dir/$selected" ] && target_path="$config_dir/$selected" || target_path="$HOME/.$selected"
+
+exec $editor "$target_path"
