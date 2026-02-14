@@ -24,4 +24,4 @@ fcitx5/.config/fcitx5/conf/cached_layouts
 *.swo
 *~
 .DS_Store
-config/hypr/hyprland/hardware.conf
+hypr/.config/hypr/hyprland/hardware.conf
