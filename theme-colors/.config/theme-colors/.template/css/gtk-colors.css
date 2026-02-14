@@ -4,5 +4,5 @@
 @define-color fg_main #{{base07}}; /* base07 */
 @define-color accent #{{base0E}}; /* base0E */
 @define-color border #{{base04}}; /* base04 */
-@define-color shadow #{{base01}}; /* base01 */
+@define-color shadow #{{shadow}}; /* variant-aware */
 @define-color error #{{base08}}; /* base08 */

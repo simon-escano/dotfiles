@@ -1,0 +1,6 @@
+#!/bin/bash
+THEME="$1"
+SRC="$HOME/.config/theme-colors/$THEME/zed/theme.json"
+DST="$HOME/.config/zed/themes/theme.json"
+
+[[ -f "$SRC" ]] && cp "$SRC" "$DST"

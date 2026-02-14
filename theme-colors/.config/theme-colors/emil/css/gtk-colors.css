@@ -4,5 +4,5 @@
 @define-color fg_main #1a1a2f; /* base07 */
 @define-color accent #6916b6; /* base0E */
 @define-color border #505063; /* base04 */
-@define-color shadow #1a1a2f; /* base07 */
+@define-color shadow #1a1a2f; /* variant-aware */
 @define-color error #f43979; /* base08 */

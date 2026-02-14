@@ -99,7 +99,7 @@ source $ZSH/oh-my-zsh.sh
 if [[ -n $SSH_CONNECTION ]]; then
     export EDITOR='vim'
 else
-    export EDITOR='zeditor --wait'
+    export EDITOR='zeditor --new --wait'
 fi
 
 # Compilation flags
@@ -141,7 +141,7 @@ alias cat="bat"
 frg() {
   INITIAL_QUERY="${*:-}"
   RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case --hidden "
-  
+
   fzf --ansi --disabled --query "$INITIAL_QUERY" \
       --bind "start:reload:$RG_PREFIX {q}" \
       --bind "change:reload:sleep 0.1; $RG_PREFIX {q} || true" \

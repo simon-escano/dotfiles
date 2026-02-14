@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+
+# 1. Source your zshrc to get your $EDITOR and $PATH
+# (Using -f to skip global rc files for speed)
+[[ -f ~/.zshrc ]] && source ~/.zshrc
+
+exec ${=EDITOR} "$@"

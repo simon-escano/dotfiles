@@ -11,6 +11,7 @@ SCRIPTS="$HOME/Scripts"
 "$SCRIPTS/apply-theme-waybar" "$THEME" &
 "$SCRIPTS/apply-theme-swaync" "$THEME" &
 "$SCRIPTS/apply-theme-walker" "$THEME" &
+"$SCRIPTS/apply-theme-zed" "$THEME" &
 wait
 
 notify-send "Theme Applied" "$THEME"

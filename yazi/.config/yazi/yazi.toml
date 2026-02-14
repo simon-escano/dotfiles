@@ -1,6 +1,6 @@
 [opener]
 edit = [
-    { run = 'code --wait "$@"', block = true, for = "unix" },
+    { run = 'editor "$@"', block = true, for = "unix" },
 ]
 
 [mgr]
