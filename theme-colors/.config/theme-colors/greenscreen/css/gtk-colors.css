@@ -1,0 +1,8 @@
+/* GTK Colors - Generated from greenscreen */
+
+@define-color bg_main #001100; /* base00 */
+@define-color fg_main #00ff00; /* base07 */
+@define-color accent #00bb00; /* base0E */
+@define-color border #009900; /* base04 */
+@define-color shadow #003300; /* variant-aware */
+@define-color error #007700; /* base08 */
